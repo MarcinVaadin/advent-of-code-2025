@@ -10,13 +10,12 @@ answer2 = 4174379265
 def prepareData(text):
     return list(map(int, str(text).replace('-',',').split(',')))
 
-def solution01(data):
+def solution(data, isInvalidFunc):
     sum = 0
     for i in range(0, len(data), 2):
         for n in range(data[i], data[i+1] + 1):
-            if (isInvalid01(n)):
+            if (isInvalidFunc(n)):
                 sum += n
-    
     return sum
 
 # Checks if first half of string equals second half
@@ -30,15 +29,6 @@ def isInvalid01(n):
         return False
 
     return n_str[0:n_len_half] == n_str[n_len_half:]
-
-def solution02(data):
-    sum = 0
-    for i in range(0, len(data), 2):
-        for n in range(data[i], data[i+1] + 1):
-            if (isInvalid02(n)):
-                sum += n
-    
-    return sum
 
 # Checks for more than 2 pattern repetitions
 def isInvalid02(n):
@@ -54,12 +44,12 @@ def isInvalid02(n):
     return False
 
 # Test example data
-assert(answer1 == solution01(prepareData(example)))
-assert(answer2 == solution02(prepareData(example)))
+assert(answer1 == solution(prepareData(example), isInvalid01))
+assert(answer2 == solution(prepareData(example), isInvalid02))
 
 # Load and check real data
 with open('input02.txt') as f:
       lines = f.read()
 
-print("Solution 01: " + str(solution01(prepareData(lines))))
-print("Solution 02: " + str(solution02(prepareData(lines))))
+print("Solution 01: " + str(solution(prepareData(lines), isInvalid01)))
+print("Solution 02: " + str(solution(prepareData(lines), isInvalid02)))
